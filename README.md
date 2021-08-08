@@ -1,11 +1,6 @@
-# bootup-ts
-This is a template for a TypeScript project.
+# systems
+Simplifications of common systems.
 
-It includes everything you might want to get started and you can delete what you don't want.
-
-Comes with the following things baked in:
-- TypeScript
-- Jest
-- ESLint
-- Prettier
-- GitHub Actions build to run tests on commit
+Includes:
+- 14 month calendar, 28 days per month except for last month which is 1 day long (or 2 days long for leap years)
+- more to come!

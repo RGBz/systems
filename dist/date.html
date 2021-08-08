@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <script src="systems.js"></script>
+    <style>
+      html,body {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        font-family: sans-serif;
+      }
+      #date {
+        font-size: xx-large;
+      }
+      #time {
+        margin-top: 1em;
+        font-size: medium;
+      }
+      #stats {
+        margin-top: 1em;
+        font-size: small;
+        color: #888;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="date"></div>
+    <div id="time"></div>
+    <div id="stats"></div>
+    <script>
+      const displayDate = document.getElementById('date');
+      const displayTime = document.getElementById('time');
+      const displayStats = document.getElementById('stats');
+      function update() {
+        const now = Calendar.now;
+        displayDate.innerText = `${now.year} ${now.monthName} ${now.dayOfMonth}`;
+        displayTime.innerText = [now.hour,now.minute,now.second].map(t => String(t).padStart(2, '0')).join(':');
+        displayStats.innerText = [
+          `W${now.week}`,
+          `D${now.dayOfYear}`,
+          `${Math.floor(now.percentOfYearComplete * 100)}%Y`,
+          `${Math.floor(now.percentOfMonthComplete * 100)}%M`,
+          `${Math.floor(now.percentOfWeekComplete * 100)}%W`,
+          `${Math.floor(now.percentOfDayComplete * 100)}%D`
+        ].join(`${String.fromCharCode(160)} ${String.fromCharCode(160)}`);
+      }
+      setInterval(update, 1000);
+    </script>
+  </body>
+</html>
