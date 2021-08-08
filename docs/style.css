@@ -1,0 +1,28 @@
+html,body {
+  font-family: sans-serif;
+}
+
+.big {
+  font-size: xx-large;
+}
+
+.small {
+  font-size: small;
+}
+
+.lighter {
+  color: #888;
+}
+
+h1, h2, .center {
+  text-align: center;
+}
+
+p {
+  padding: 1em 10%;
+}
+
+.dark-theme {
+  background-color: black;
+  color: white;
+}
