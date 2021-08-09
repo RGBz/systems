@@ -4,27 +4,27 @@ const HOUR_IN_MILLISECONDS = 60 * MINUTE_IN_MILLISECONDS;
 const DAY_IN_MILLISECONDS = 24 * HOUR_IN_MILLISECONDS;
 const WEEK_IN_MILLISECONDS = 7 * HOUR_IN_MILLISECONDS;
 
-const MONTH_NAMES = [
-  'Zéro',
-  'Uno',
-  'Duo',
-  'Tré',
-  'Quat',
-  'Pent',
-  'Céza',
-  'Seto',
-  'Éiga',
-  'Nüna',
-  'Deci',
-  'Onzo',
-  'Béza',
-  'Festa',
-];
-
 export class Calendar {
   private date: Date;
 
-  static MONTHS_IN_YEAR = 14;
+  static MONTH_NAMES = [
+    'Zéro',
+    'Uno',
+    'Duo',
+    'Tré',
+    'Quat',
+    'Pent',
+    'Céza',
+    'Seto',
+    'Éiga',
+    'Nüna',
+    'Deci',
+    'Onzo',
+    'Béza',
+    'Festa',
+  ];
+
+  static MONTHS_IN_YEAR = Calendar.MONTH_NAMES.length;
   static DAYS_IN_WEEK = 7;
   static DAYS_IN_MONTH_STANDARD = 4 * Calendar.DAYS_IN_WEEK;
   static DAYS_IN_YEAR_STANDARD = Calendar.DAYS_IN_MONTH_STANDARD * 13 + 1;
@@ -52,7 +52,7 @@ export class Calendar {
   }
 
   get monthName(): string {
-    return MONTH_NAMES[this.month];
+    return Calendar.MONTH_NAMES[this.month];
   }
 
   get week(): number {
@@ -267,8 +267,11 @@ export class Calendar {
   }
 
   toString(): string {
-    return `${this.year} ${MONTH_NAMES[this.month]} ${this.dayOfMonth} ${String(this.hour).padStart(2, '0')}:${String(
-      this.minute,
-    ).padStart(2, '0')}:${String(this.second).padStart(2, '0')}.${String(this.millisecond).padStart(3, '0')}`;
+    return `${this.year} ${Calendar.MONTH_NAMES[this.month]} ${this.dayOfMonth} ${String(this.hour).padStart(
+      2,
+      '0',
+    )}:${String(this.minute).padStart(2, '0')}:${String(this.second).padStart(2, '0')}.${String(
+      this.millisecond,
+    ).padStart(3, '0')}`;
   }
 }
