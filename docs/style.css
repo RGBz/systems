@@ -1,4 +1,4 @@
-html,body {
+html, body {
   font-family: sans-serif;
 }
 
@@ -19,7 +19,7 @@ h1, h2, .center {
 }
 
 p {
-  padding: 1em 10%;
+  margin: 1em 1em 0;
 }
 
 .dark-theme {
