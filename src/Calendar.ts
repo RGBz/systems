@@ -40,11 +40,16 @@ export class Calendar {
   }
 
   private constructor(date: Date) {
+    // Remove daylight savings time
+    const standardTimezoneOffsetInMinutes = getStandardTimezoneOffsetInMinutes(date);
+    if (date.getTimezoneOffset() < standardTimezoneOffsetInMinutes) {
+      date.setMinutes(date.getMinutes() - standardTimezoneOffsetInMinutes);
+    }
     this.date = date;
   }
 
   get year(): number {
-    return this.date.getUTCFullYear();
+    return this.date.getFullYear();
   }
 
   get month(): number {
@@ -117,23 +122,23 @@ export class Calendar {
   }
 
   get dayOfWeek(): number {
-    return this.date.getUTCDay();
+    return this.date.getDay();
   }
 
   get hour(): number {
-    return this.date.getUTCHours();
+    return this.date.getHours();
   }
 
   get minute(): number {
-    return this.date.getUTCMinutes();
+    return this.date.getMinutes();
   }
 
   get second(): number {
-    return this.date.getUTCSeconds();
+    return this.date.getSeconds();
   }
 
   get millisecond(): number {
-    return this.date.getUTCMilliseconds();
+    return this.date.getMilliseconds();
   }
 
   get millisecondsSinceEpoch(): number {
@@ -141,11 +146,11 @@ export class Calendar {
   }
 
   get millisecondsAtYearStart(): number {
-    return Date.UTC(this.date.getUTCFullYear(), 0, 1, 0, 0, 0, 0);
+    return new Date(this.date.getFullYear(), 0, 1, 0, 0, 0, 0).getTime();
   }
 
   get millisecondsAtYearEnd(): number {
-    return Date.UTC(this.date.getUTCFullYear() + 1, 0, 1, 0, 0, 0, -1);
+    return new Date(this.date.getFullYear() + 1, 0, 1, 0, 0, 0, -1).getTime();
   }
 
   get millisecondsAtMonthStart(): number {
@@ -171,15 +176,23 @@ export class Calendar {
   }
 
   get millisecondsAtDayStart(): number {
-    return Date.UTC(this.date.getUTCFullYear(), this.date.getUTCMonth(), this.date.getUTCDate(), 0, 0, 0, 0);
+    return new Date(this.date.getUTCFullYear(), this.date.getUTCMonth(), this.date.getUTCDate(), 0, 0, 0, 0).getTime();
   }
 
   get millisecondsAtDayEnd(): number {
-    return Date.UTC(this.date.getUTCFullYear(), this.date.getUTCMonth(), this.date.getUTCDate() + 1, 0, 0, 0, -1);
+    return new Date(
+      this.date.getUTCFullYear(),
+      this.date.getUTCMonth(),
+      this.date.getUTCDate() + 1,
+      0,
+      0,
+      0,
+      -1,
+    ).getTime();
   }
 
   get millisecondsAtHourStart(): number {
-    return Date.UTC(
+    return new Date(
       this.date.getUTCFullYear(),
       this.date.getUTCMonth(),
       this.date.getUTCDate(),
@@ -187,11 +200,11 @@ export class Calendar {
       0,
       0,
       0,
-    );
+    ).getTime();
   }
 
   get millisecondsAtHourEnd(): number {
-    return Date.UTC(
+    return new Date(
       this.date.getUTCFullYear(),
       this.date.getUTCMonth(),
       this.date.getUTCDate(),
@@ -199,11 +212,11 @@ export class Calendar {
       0,
       0,
       -1,
-    );
+    ).getTime();
   }
 
   get millisecondsAtMinuteStart(): number {
-    return Date.UTC(
+    return new Date(
       this.date.getUTCFullYear(),
       this.date.getUTCMonth(),
       this.date.getUTCDate(),
@@ -211,11 +224,11 @@ export class Calendar {
       this.date.getUTCMinutes(),
       0,
       0,
-    );
+    ).getTime();
   }
 
   get millisecondsAtMinuteEnd(): number {
-    return Date.UTC(
+    return new Date(
       this.date.getUTCFullYear(),
       this.date.getUTCMonth(),
       this.date.getUTCDate(),
@@ -223,11 +236,11 @@ export class Calendar {
       this.date.getUTCMinutes() + 1,
       0,
       -1,
-    );
+    ).getTime();
   }
 
   get millisecondsAtSecondStart(): number {
-    return Date.UTC(
+    return new Date(
       this.date.getUTCFullYear(),
       this.date.getUTCMonth(),
       this.date.getUTCDate(),
@@ -235,11 +248,11 @@ export class Calendar {
       this.date.getUTCMinutes(),
       this.date.getUTCSeconds(),
       0,
-    );
+    ).getTime();
   }
 
   get millisecondsAtSecondEnd(): number {
-    return Date.UTC(
+    return new Date(
       this.date.getUTCFullYear(),
       this.date.getUTCMonth(),
       this.date.getUTCDate(),
@@ -247,7 +260,7 @@ export class Calendar {
       this.date.getUTCMinutes(),
       this.date.getUTCSeconds() + 1,
       -1,
-    );
+    ).getTime();
   }
 
   get dayOfYearAtMonthStart(): number {
@@ -274,4 +287,10 @@ export class Calendar {
       this.millisecond,
     ).padStart(3, '0')}`;
   }
+}
+
+function getStandardTimezoneOffsetInMinutes(date: Date): number {
+  const jan = new Date(date.getFullYear(), 0, 1);
+  const jul = new Date(date.getFullYear(), 6, 1);
+  return jan.getTimezoneOffset() - jul.getTimezoneOffset();
 }
