@@ -1,10 +1,10 @@
 import { Calendar } from './Calendar';
 import timekeeper from 'timekeeper';
 
-timekeeper.freeze('2000-12-30');
+timekeeper.freeze(new Date(2000, 11, 30)); // Last day of 2000
 
 describe('year', () => {
-  test('should match the UTC year', () => {
+  test("should match the local timezone's year without DST", () => {
     expect(Calendar.now.year).toEqual(2000);
   });
 });

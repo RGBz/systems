@@ -5,7 +5,7 @@
   "main": "develop.js",
   "scripts": {
     "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix",
-    "test": "jest --silent",
+    "test": "jest",
     "build": "tsc",
     "build-web": "webpack",
     "start": "npm run build && node build/develop.js",
